@@ -9,9 +9,9 @@ Program helps SQU student to find the most suitable timetable for them.
 * third, the timetables will show up.  
 * fourth you can add or remove free filters(free day or time)  
     - time: enter the time you want to be free after add word exapmle: "add 08".
-      - Times: 08,10,12,14,16  
+      - Times: 08,10,12,14,16.  
     - day: enter the time you want to be free after add word exapmle: "add thu".
-      - Days: sun, mon, tue, wed, thu  
+      - Days: sun, mon, tue, wed, thu.
 
-  # known bugs
-  * if the section has more than one lab section, the first lab section will be counted.
+# known bugs
+* if the section has more than one lab section, the first lab section will be counted.
