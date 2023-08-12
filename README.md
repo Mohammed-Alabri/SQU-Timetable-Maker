@@ -1,5 +1,5 @@
 # SQU-Timetable-Maker
-Program helps SQU student to find the most suitable timetable for them.
+A terminal-based Program helps SQU student to find the most suitable timetable for them.
 
 # How to use the program
 * first, choose how many courses you want.  
