@@ -1,9 +1,6 @@
 import copy
-
-import functions
 import itertools
 from tabulate import tabulate
-from Section import Section
 
 times = ['', '08:00-09:20', "08:00-09:50", "10:00-11:20", "10:00-11:50", "12:00-13:20",
          "12:00-13:50", "14:15-15:35", "14:15-16:05", "16:15-17:35", "16:15-18:05"]
@@ -31,7 +28,7 @@ def rm_empty(table):
 
 def all_combinations(lst):
     combinations = itertools.product(*lst)
-    return list(combinations)
+    return combinations
 
 
 def get_correct_tables(combs):

@@ -8,8 +8,8 @@ from time import sleep
 def remove_wrong(secs):
     lst = []
     for sec in secs:
-        if sec.isdigit() and int(sec) not in lst:
-            lst.append(int(sec))
+        if sec.isdigit() and sec not in lst and len(sec) > 1:
+            lst.append(sec)
     return lst
 
 
@@ -25,8 +25,11 @@ def slow(num, courses, sections):
         for sec in course.sections:
             print(
                 f"section {sec.section_number}, instructors: {str(sec.instructors)[1:-1]}, remainingSeats: {sec.remainingSeats}")
-        secs = input("Enter sections seberated by space: ").split()
-        sections.append(course.get_sections(remove_wrong(secs)))
+        secs = remove_wrong(input("Enter sections seberated by space: ").split())
+        while len(secs) == 0:
+            print("Please enter valid sections.")
+            secs = remove_wrong(input("Enter sections seberated by space: ").split())
+        sections.append(course.get_sections(secs))
 
 
 def fast(num, courses, sections):
@@ -73,7 +76,6 @@ def main():
     else:
         filtered = copy.deepcopy(combs)
         filters = []
-        inn = ""
         while True:
             if len(filtered) > 0:
                 for i in filtered:

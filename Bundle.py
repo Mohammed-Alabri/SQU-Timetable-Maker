@@ -1,12 +1,17 @@
+from Course import Course
+
+
 # class to group all courses objects
 class Bundle:
-    def __init__(self, courses):
-        self.courses = courses
+    def __init__(self):
+        self.courses = {}
+
+    def add_course(self, course: Course):
+        self.courses[course.crscode] = course
 
     def find_course(self, crscode):
-        for course in self.courses:
-            if course.crscode == crscode:
-                return course
+        if crscode in self.courses:
+            return self.courses[crscode]
         return -1
 
     def names(self):
@@ -14,13 +19,6 @@ class Bundle:
         for i in self.courses:
             lst.append(i.crscode)
         return lst
-
-    def find_by_coll(self, code):
-        lst = []
-        for course in self.courses:
-            if course.crscode[:4] == code:
-                lst.append(course)
-        return Bundle(lst)
 
     def get_sections(self, crscode, sections=None):
         course = self.find_course(crscode)
