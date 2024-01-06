@@ -14,4 +14,4 @@ A terminal-based Program helps SQU student to find the most suitable timetable f
       - Days: sun, mon, tue, wed, thu.
 
 # known bugs
-* if the section has more than one lab section, the first lab section will be counted.
+* if the section has more than one lab section, the first lab section will be counted.(fixed)
