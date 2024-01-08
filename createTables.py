@@ -1,6 +1,8 @@
 import copy
 import itertools
 from tabulate import tabulate
+from Lecture import Lecture
+from Section import Section
 
 times = ['', '08:00-09:20', "08:00-09:50", "10:00-11:20", "10:00-11:50", "12:00-13:20",
          "12:00-13:50", "14:15-15:35", "14:15-16:05", "16:15-17:35", "16:15-18:05"]
@@ -35,31 +37,35 @@ def get_correct_tables(combs):
     correct = []
     for table in combs:
         taken = []
-        for course in table:
-            for i in course.times:
-                taken.append(i[:6])
+        section: Section
+        for section in table:
+            lecture: Lecture
+            for lecture in section.lectures:
+                taken.append(lecture.day + lecture.time[:2])
         if len(taken) == len(set(taken)):
             correct.append(table)
     return correct
 
 
-def print_table(courses):
+def print_table(table):
     tt = copy.deepcopy(table_layout)
-    for section in courses:
-        for n in section.times:
-            day = n[:3]
-            time = n[4:]
-            tt[times.index(time)][tt[0].index(day)] = f"{section.course.crscode}/{section.section_number}"
+    section: Section
+    for section in table:
+        lecture: Lecture
+        for lecture in section.lectures:
+            tt[times.index(lecture.time)][tt[0].index(lecture.day)] = f"{section.course.crscode}/{lecture.section}\n{lecture.location}"
     print(tabulate(rm_empty(tt), headers="firstrow", tablefmt="fancy_grid"))
 
 
 def free_day_filter(day, tables_list):
     filtered = []
 
-    def dd(day, table):
-        for section in table:
-            for i in section.times:
-                if i[:3] == day:
+    def dd(dayy, tablee):
+        section: Section
+        for section in tablee:
+            lecture: Lecture
+            for lecture in section.lectures:
+                if lecture.day == dayy:
                     return False
         return True
 
@@ -72,10 +78,12 @@ def free_day_filter(day, tables_list):
 def free_time_filter(time, tables_list):
     filtered = []
 
-    def tt(time, table):
-        for section in table:
-            for i in section.times:
-                if i[4:6] == time:
+    def tt(timee, tablee):
+        section: Section
+        for section in tablee:
+            lecture: Lecture
+            for lecture in section.lectures:
+                if lecture.time[:2] == timee:
                     return False
         return True
 

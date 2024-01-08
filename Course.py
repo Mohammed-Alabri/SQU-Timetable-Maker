@@ -1,3 +1,6 @@
+from Section import Section
+
+
 class Course:
     def __init__(self, crscode, crsName):
         self.crscode = crscode
@@ -9,6 +12,7 @@ class Course:
 
     def get_section(self, secnum):
         sec = []
+        section: Section
         for section in self.sections:
             if secnum in section.section_number:
                 sec += [section]
@@ -16,6 +20,7 @@ class Course:
         return sec
 
     def getsec(self, secnum):
+        section: Section
         for section in self.sections:
             if section.section_number == secnum:
                 return section
@@ -25,11 +30,12 @@ class Course:
     def get_sections(self, secs):
         lst = []
         for i in secs:
-            n = self.get_section(i)
-            if n:
-                for t in n:
-                    print(f"Section {t.section_number} found. remaining seats: {t.remainingSeats}")
-                    lst.append(t)
+            searched = self.get_section(i)
+            if searched:
+                section: Section
+                for section in searched:
+                    print(f"Section {section.section_number} found. remaining seats: {section.remainingSeats}")
+                    lst.append(section)
             else:
                 print(f"Section {i} not found.")
         return lst

@@ -20,7 +20,7 @@ def slow(num, courses, sections):
         course = courses.find_course(sub)
         while course == -1:
             print("Course code not found Please Try Again")
-            sub = input(f"{i + 1}: ")
+            sub = input(f"{i + 1}: ").upper()
             course = courses.find_course(sub)
         for sec in course.sections:
             print(

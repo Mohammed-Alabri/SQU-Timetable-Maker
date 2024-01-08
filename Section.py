@@ -1,10 +1,20 @@
+from Lecture import Lecture
+
+
 class Section:
-    def __init__(self, course, section_number, time, building, instructor, exam_date_time):
+    def __init__(self, course, section_number: str, lecture: Lecture, instructor: str, exam_date_time: str):
         self.course = course
         self.section_number = section_number
-        self.instructors = [instructor]
-        self.times = [time]
-        self.buildings = [building]
+        self.instructors = []
+        if instructor.__class__ == list:
+            self.instructors = instructor
+        else:
+            self.instructors.append(instructor)
+        self.lectures = []
+        if lecture.__class__ == list:
+            self.lectures += lecture
+        else:
+            self.lectures.append(lecture)
         self.exam_date_time = exam_date_time
         self.seatTaken = ''
         self.remainingSeats = ''
@@ -23,18 +33,5 @@ class Section:
         if instructor not in self.instructors:
             self.instructors.append(instructor)
 
-    def add_lecture(self, time, building):
-        if time not in self.times:
-            self.times.append(time)
-            self.buildings.append(building)
-
-    def get_building(self, time):
-        return self.buildings[self.times.index(time)]
-
-    def print_all(self):
-        print(self.section_number)
-        print(self.instructors)
-        print(self.times)
-        print(self.buildings)
-        print(self.exam_date_time)
-        return
+    def add_lecture(self, lecture: Lecture):
+        self.lectures.append(lecture)
