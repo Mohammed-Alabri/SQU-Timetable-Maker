@@ -2,7 +2,6 @@ import copy
 
 import requests as rq
 import json
-import ujson
 from Course import Course
 from Section import Section
 from Bundle import Bundle

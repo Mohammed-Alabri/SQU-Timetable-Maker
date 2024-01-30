@@ -1,22 +1,21 @@
 import copy
 import itertools
-from tabulate import tabulate
 from Lecture import Lecture
 from Section import Section
 
 times = ['', '08:00-09:20', "08:00-09:50", "10:00-11:20", "10:00-11:50", "12:00-13:20",
          "12:00-13:50", "14:15-15:35", "14:15-16:05", "16:15-17:35", "16:15-18:05"]
 table_layout = [['Days/ Times', 'SUN', 'MON', 'TUE', 'WED', 'THU'],
-                ['08:00-09:20', '', '', '', '', ''],
-                ["08:00-09:50", '', '', '', '', ''],
-                ["10:00-11:20", '', '', '', '', ''],
-                ["10:00-11:50", '', '', '', '', ''],
-                ["12:00-13:20", '', '', '', '', ''],
-                ["12:00-13:50", '', '', '', '', ''],
-                ["14:15-15:35", '', '', '', '', ''],
-                ["14:15-16:05", '', '', '', '', ''],
-                ["16:15-17:35", '', '', '', '', ''],
-                ["16:15-18:05", '', '', '', '', '']]
+                ['08:00\n-09:20', '', '', '', '', ''],
+                ["08:00\n-09:50", '', '', '', '', ''],
+                ["10:00\n-11:20", '', '', '', '', ''],
+                ["10:00\n-11:50", '', '', '', '', ''],
+                ["12:00\n-13:20", '', '', '', '', ''],
+                ["12:00\n-13:50", '', '', '', '', ''],
+                ["14:15\n-15:35", '', '', '', '', ''],
+                ["14:15\n-16:05", '', '', '', '', ''],
+                ["16:15\n-17:35", '', '', '', '', ''],
+                ["16:15\n-18:05", '', '', '', '', '']]
 
 
 def rm_empty(table):
@@ -54,7 +53,7 @@ def print_table(table):
         lecture: Lecture
         for lecture in section.lectures:
             tt[times.index(lecture.time)][tt[0].index(lecture.day)] = f"{section.course.crscode}/{lecture.section}\n{lecture.location}"
-    print(tabulate(rm_empty(tt), headers="firstrow", tablefmt="fancy_grid"))
+    return rm_empty(tt)
 
 
 def free_day_filter(day, tables_list):

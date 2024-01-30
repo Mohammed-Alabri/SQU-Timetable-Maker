@@ -34,8 +34,5 @@ class Course:
             if searched:
                 section: Section
                 for section in searched:
-                    print(f"Section {section.section_number} found. remaining seats: {section.remainingSeats}")
                     lst.append(section)
-            else:
-                print(f"Section {i} not found.")
         return lst
