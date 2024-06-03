@@ -13,6 +13,7 @@ def main(page: ft.Page):
     def event(e):
         if e.data == 'detach' and page.platform == ft.PagePlatform.ANDROID:
             os._exit(1)
+    page.on_app_lifecycle_state_change = event
 
     def route_change(route):
         page.views.clear()
