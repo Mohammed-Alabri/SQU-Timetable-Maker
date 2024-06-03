@@ -1,3 +1,4 @@
+import os
 import flet as ft
 from home_page import home_page
 from tables_page import tables_page
@@ -8,6 +9,10 @@ from tables_page import tables_page
 def main(page: ft.Page):
     page.theme_mode = 'light'
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
+
+    def event(e):
+        if e.data == 'detach' and page.platform == ft.PagePlatform.ANDROID:
+            os._exit(1)
 
     def route_change(route):
         page.views.clear()
