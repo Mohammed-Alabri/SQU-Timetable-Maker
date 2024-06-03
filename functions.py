@@ -53,7 +53,7 @@ def class_rearrange_courses() -> Bundle:
     data = extract_data()
     courses = Bundle()
     last_section = ''
-    seat = extract_seating_data()
+    # seat = extract_seating_data()
     l1 = None
     l2 = None
     l3 = None
@@ -61,7 +61,9 @@ def class_rearrange_courses() -> Bundle:
         fcor = courses.find_course(course['crscode'])
         if fcor == -1:  # not found course
             cor = Course(course['crscode'], course['crsName'])
-            sec = Section(cor, str(course['sectno']), Lecture(str(course['sectno']), course['timeBldRoom'], course['building']), course['instructor'],
+            sec = Section(cor, str(course['sectno']),
+                          Lecture(str(course['sectno']), course['timeBldRoom'], course['building']),
+                          course['instructor'],
                           course['exam_date_time'])
             cor.add_section(sec)
             courses.add_course(cor)
@@ -76,10 +78,12 @@ def class_rearrange_courses() -> Bundle:
                 sec.add_lecture(Lecture(str(course['sectno']), course['timeBldRoom'], course['building']))
                 sec.add_instructors(course['instructor'])
             elif sec == -1 and last_section.section_number == str(course['sectno'] - 1) and l1 == None:  # lab section
-                sec = Section(fcor,  last_section.section_number + '-' + str(course['sectno']), copy.copy(last_section.lectures), copy.copy(last_section.instructors), last_section.exam_date_time)
+                sec = Section(fcor, last_section.section_number + '-' + str(course['sectno']),
+                              copy.copy(last_section.lectures), copy.copy(last_section.instructors),
+                              last_section.exam_date_time)
                 sec.add_lecture(Lecture(str(course['sectno']), course['timeBldRoom'], course['building']))
                 sec.add_instructors(course['instructor'])
-                #print(sec.section_number, sec.course.crscode, last_section.section_number, last_section.course.crscode)
+                # print(sec.section_number, sec.course.crscode, last_section.section_number, last_section.course.crscode)
                 fcor.sections.remove(last_section)
                 fcor.add_section(sec)
                 l1 = sec
@@ -88,7 +92,9 @@ def class_rearrange_courses() -> Bundle:
                 sec.add_lecture(Lecture(str(course['sectno']), course['timeBldRoom'], course['building']))
                 sec.add_instructors(course['instructor'])
             elif sec == -1 and last_section.section_number == str(course['sectno'] - 2) and l2 == None:  # lab section
-                sec = Section(fcor,  last_section.section_number + '-' + str(course['sectno']), copy.copy(last_section.lectures), copy.copy(last_section.instructors), last_section.exam_date_time)
+                sec = Section(fcor, last_section.section_number + '-' + str(course['sectno']),
+                              copy.copy(last_section.lectures), copy.copy(last_section.instructors),
+                              last_section.exam_date_time)
                 sec.add_lecture(Lecture(str(course['sectno']), course['timeBldRoom'], course['building']))
                 sec.add_instructors(course['instructor'])
                 fcor.add_section(sec)
@@ -98,7 +104,9 @@ def class_rearrange_courses() -> Bundle:
                 sec.add_lecture(Lecture(str(course['sectno']), course['timeBldRoom'], course['building']))
                 sec.add_instructors(course['instructor'])
             elif sec == -1 and last_section.section_number == str(course['sectno'] - 3) and l3 == None:  # lab section
-                sec = Section(fcor,  last_section.section_number + '-' + str(course['sectno']), copy.copy(last_section.lectures), copy.copy(last_section.instructors), last_section.exam_date_time)
+                sec = Section(fcor, last_section.section_number + '-' + str(course['sectno']),
+                              copy.copy(last_section.lectures), copy.copy(last_section.instructors),
+                              last_section.exam_date_time)
                 sec.add_lecture(Lecture(str(course['sectno']), course['timeBldRoom'], course['building']))
                 sec.section_number += '-' + sec.section_number[:-1] + '3'
                 sec.add_instructors(course['instructor'])
@@ -118,7 +126,7 @@ def class_rearrange_courses() -> Bundle:
                 l1 = None
                 l2 = None
                 l3 = None
-            sec.set_seating(get_seating(seat, sec.course.crscode, str(course['sectno'])))
+            # sec.set_seating(get_seating(seat, sec.course.crscode, str(course['sectno'])))
     return courses
 
 

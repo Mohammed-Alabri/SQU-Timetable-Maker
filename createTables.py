@@ -1,30 +1,8 @@
-import copy
 import itertools
 from Lecture import Lecture
 from Section import Section
 
-times = ['', '08:00-09:20', "08:00-09:50", "10:00-11:20", "10:00-11:50", "12:00-13:20",
-         "12:00-13:50", "14:15-15:35", "14:15-16:05", "16:15-17:35", "16:15-18:05"]
-table_layout = [['Days/ Times', 'SUN', 'MON', 'TUE', 'WED', 'THU'],
-                ['08:00\n-09:20', '', '', '', '', ''],
-                ["08:00\n-09:50", '', '', '', '', ''],
-                ["10:00\n-11:20", '', '', '', '', ''],
-                ["10:00\n-11:50", '', '', '', '', ''],
-                ["12:00\n-13:20", '', '', '', '', ''],
-                ["12:00\n-13:50", '', '', '', '', ''],
-                ["14:15\n-15:35", '', '', '', '', ''],
-                ["14:15\n-16:05", '', '', '', '', ''],
-                ["16:15\n-17:35", '', '', '', '', ''],
-                ["16:15\n-18:05", '', '', '', '', '']]
-
-
-def rm_empty(table):
-    # rows
-    empty = [''] * 5
-    for row in reversed(range(1, 11)):  # len of table is 11
-        if table[row][1:] == empty:
-            del table[row]
-    return table
+days_layout = ['Days/ Times', 'SUN', 'MON', 'TUE', 'WED', 'THU']
 
 
 def all_combinations(lst):
@@ -32,28 +10,51 @@ def all_combinations(lst):
     return combinations
 
 
+def noconfilect(dic: dict):
+    day: list
+    for day in dic:
+        dic[day].sort(key=lambda x: x[0])
+        for i in range(len(dic[day]) - 1):
+            if dic[day][i][1] >= dic[day][i + 1][0]:
+                return False
+
+    return True
+
+
 def get_correct_tables(combs):
     correct = []
     for table in combs:
-        taken = []
+        taken = {'SUN': [], 'MON': [], 'TUE': [], 'WED': [], 'THU': []}
         section: Section
         for section in table:
             lecture: Lecture
+            seclecs = {}
             for lecture in section.lectures:
-                taken.append(lecture.day + lecture.time[:2])
-        if len(taken) == len(set(taken)):
+                # sometimes there is duplicate in lectures
+                if lecture.day + lecture.time not in seclecs:
+                    taken[lecture.day] += [lecture.tts]
+                    seclecs[lecture.day + lecture.time] = 0
+
+        if noconfilect(taken):
             correct.append(table)
     return correct
 
 
 def print_table(table):
-    tt = copy.deepcopy(table_layout)
-    section: Section
+    aa = []
+    dic = {}
     for section in table:
-        lecture: Lecture
         for lecture in section.lectures:
-            tt[times.index(lecture.time)][tt[0].index(lecture.day)] = f"{section.course.crscode}/{lecture.section}\n{lecture.location}"
-    return rm_empty(tt)
+            if lecture.time not in dic:
+                t = [''] * 6
+                t[0] = lecture.time.replace('-', '-\n')
+                dic[lecture.time] = t
+                aa.append(t)
+            dic[lecture.time][
+                days_layout.index(lecture.day)] = f"{section.course.crscode}/{lecture.section}\n{lecture.location}"
+    aa.sort(key=lambda x: int(x[0].replace(':', '').replace('-\n', '')))
+    aa = [days_layout] + aa
+    return aa
 
 
 def free_day_filter(day, tables_list):

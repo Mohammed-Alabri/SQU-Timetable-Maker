@@ -55,7 +55,6 @@ def tables_page(page: ft.Page):
                 ),
             ],
             rows=rows)
-        print(table.width)
         return table
 
     tables_col = ft.Column()

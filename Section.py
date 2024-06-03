@@ -23,7 +23,6 @@ class Section:
         self.sectMax = ''
 
     def set_seating(self, dic):
-        self.seatTaken = dic['seatTaken']
         self.remainingSeats = dic['remainingSeats']
         self.totalReserved = dic['totalReserved']
         self.reservedSeats = dic['reservedSeats']

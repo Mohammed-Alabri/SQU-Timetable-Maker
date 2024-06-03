@@ -71,7 +71,7 @@ def home_page(page: ft.Page):
 
     def dlg_wait_open():
         page.dialog = dlg_wait
-        dlg_wait.content = ft.Row(controls=[ft.ProgressRing(), ft.Text("cooking tables...")])
+        dlg_wait.content = ft.Row(controls=[ft.ProgressRing(), ft.Text("downloading data...")])
         dlg_wait.open = True
         page.update()
 
