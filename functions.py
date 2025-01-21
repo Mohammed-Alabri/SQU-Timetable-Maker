@@ -130,6 +130,9 @@ def class_rearrange_courses() -> Bundle:
     return courses
 
 
+def courses_data():
+    pass
+
 def find_course(crscode, lst):
     for course in lst:
         if course.crscode == crscode:
