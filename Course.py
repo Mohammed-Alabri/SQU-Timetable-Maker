@@ -25,7 +25,7 @@ class Course:
             if section.section_number == secnum:
                 return section
 
-        return -1
+        return None
 
     def get_sections(self, secs):
         lst = []

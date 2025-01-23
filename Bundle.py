@@ -12,7 +12,7 @@ class Bundle:
     def find_course(self, crscode):
         if crscode in self.courses:
             return self.courses[crscode]
-        return -1
+        return None
 
     def names(self):
         lst = []

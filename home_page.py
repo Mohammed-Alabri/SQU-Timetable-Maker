@@ -1,5 +1,5 @@
 import flet as ft
-from functions import class_rearrange_courses
+from functions import courses_data
 
 
 def home_page(page: ft.Page):
@@ -79,7 +79,7 @@ def home_page(page: ft.Page):
         dlg_wait_open()
         page.client_storage.set("last_fields", get_courses())
         page.update()
-        courses = page.session.get("courses") if page.session.contains_key("courses") else class_rearrange_courses()
+        courses = page.session.get("courses") if page.session.contains_key("courses") else courses_data()
         page.session.set("courses", courses)
         flag = True
         message = 'Please Enter valid crscode and sections in:\n'

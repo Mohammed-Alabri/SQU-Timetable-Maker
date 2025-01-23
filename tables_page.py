@@ -1,6 +1,6 @@
 import flet as ft
 import createTables
-from functions import class_rearrange_courses
+from functions import courses_data
 import json
 
 
@@ -9,7 +9,7 @@ def tables_page(page: ft.Page):
     view.theme_mode = ft.ThemeMode.LIGHT
     view.controls.append(ft.AppBar(title=ft.Text("Result"), bgcolor=ft.colors.SURFACE_VARIANT))
 
-    courses = page.session.get("courses") if page.session.contains_key("courses") else class_rearrange_courses()
+    courses = page.session.get("courses") if page.session.contains_key("courses") else courses_data()
     sections = []
     dic = page.route.split('?')[1]
     dic = dic.replace("\'", "\"")

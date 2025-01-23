@@ -2,7 +2,7 @@ from Lecture import Lecture
 
 
 class Section:
-    def __init__(self, course, section_number: str, lecture: Lecture, instructor: str, exam_date_time: str):
+    def __init__(self, course, section_number: str, lecture: Lecture, instructor: str):
         self.course = course
         self.section_number = section_number
         self.instructors = []
@@ -15,7 +15,6 @@ class Section:
             self.lectures += lecture
         else:
             self.lectures.append(lecture)
-        self.exam_date_time = exam_date_time
         self.seatTaken = ''
         self.remainingSeats = ''
         self.totalReserved = ''

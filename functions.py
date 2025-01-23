@@ -6,6 +6,15 @@ from Course import Course
 from Section import Section
 from Bundle import Bundle
 from Lecture import Lecture
+import pandas as pd
+
+def data():
+    url = "https://github.com/Mohammed-Alabri/SQU-Timetable-Maker/raw/refs/heads/main/data/Science.xls"
+    file = rq.get(url).content
+    df = pd.ExcelFile(file).parse("Sheet1")
+    return df
+    
+    
 
 
 def extract_data():
@@ -131,18 +140,30 @@ def class_rearrange_courses() -> Bundle:
 
 
 def courses_data():
-    pass
+    bundle = Bundle()
+    df = data()
+    for index, row in df.iterrows():
+        if not bundle.find_course(row['Course Code']):
+            course = Course(row['Course Code'], row['Course Name'])
+            bundle.add_course(course)
+            sec = Section(course, str(row['Section Num']),
+                          Lecture(str(row['Section Num']), row['Day'], row['From Time'], row['To Time'], row['Hall Name']),
+                          row['Instructor Name'],
+                          row['Exam Date/Time'])
+            
+            course.add_section(sec)
+        elif not bundle.find_course(row['Course Code']).getsec(str(row['Section Num'])):
+            course = bundle.find_course(row['Course Code'])
+            sec = Section(course, str(row['Section Num']),
+                          Lecture(str(row['Section Num']), row['Day'], row['From Time'], row['To Time'], row['Hall Name']),
+                          row['Instructor Name'],
+                          row['Exam Date/Time'])
+            
+            course.add_section(sec)
+        else:
+            sec = bundle.find_course(row['Course Code']).getsec(str(row['Section Num']))
+            sec.add_lecture(Lecture(str(row['Section Num']), row['Day'], row['From Time'], row['To Time'], row['Hall Name']))
+    
+    return bundle
 
-def find_course(crscode, lst):
-    for course in lst:
-        if course.crscode == crscode:
-            return course
-    return -1
 
-
-def get_seating(data, crscode, section):
-    for crs in data:
-        if crs['crscode'] == crscode and str(crs['sectno']) == section:
-            return dict(list(crs.items())[6:])
-
-    return -1
