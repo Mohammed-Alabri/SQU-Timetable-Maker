@@ -1,5 +1,3 @@
-import copy
-
 import requests as rq
 import json
 from Course import Course
@@ -8,13 +6,17 @@ from Bundle import Bundle
 from Lecture import Lecture
 import pandas as pd
 
+
 def data():
     url = "https://github.com/Mohammed-Alabri/SQU-Timetable-Maker/raw/refs/heads/main/data/Science.xls"
     file = rq.get(url).content
     df = pd.ExcelFile(file).parse("Sheet1")
+    df = df.dropna(subset=["From Time", "Day", "To Time"])
+    df = df.fillna('')
+    df['Section Num'] = df['Section Num'].astype(int)
+    df = df.astype(str)
+
     return df
-    
-    
 
 
 def extract_data():
@@ -58,7 +60,7 @@ def extract_seating_data():
 
 
 # rearrange courses using classes(Course and Section)
-def class_rearrange_courses() -> Bundle:
+"""def class_rearrange_courses() -> Bundle:
     data = extract_data()
     courses = Bundle()
     last_section = ''
@@ -136,7 +138,7 @@ def class_rearrange_courses() -> Bundle:
                 l2 = None
                 l3 = None
             # sec.set_seating(get_seating(seat, sec.course.crscode, str(course['sectno'])))
-    return courses
+    return courses"""
 
 
 def courses_data():
@@ -146,24 +148,23 @@ def courses_data():
         if not bundle.find_course(row['Course Code']):
             course = Course(row['Course Code'], row['Course Name'])
             bundle.add_course(course)
-            sec = Section(course, str(row['Section Num']),
-                          Lecture(str(row['Section Num']), row['Day'], row['From Time'], row['To Time'], row['Hall Name']),
-                          row['Instructor Name'],
-                          row['Exam Date/Time'])
-            
+            sec = Section(course, row['Section Num'],
+                          Lecture(row['Section Num'], row['Day'], row['From Time'], row['To Time'],
+                                  row['Hall Name']),
+                          row['Instructor Name'])
+
             course.add_section(sec)
         elif not bundle.find_course(row['Course Code']).getsec(str(row['Section Num'])):
             course = bundle.find_course(row['Course Code'])
             sec = Section(course, str(row['Section Num']),
-                          Lecture(str(row['Section Num']), row['Day'], row['From Time'], row['To Time'], row['Hall Name']),
-                          row['Instructor Name'],
-                          row['Exam Date/Time'])
-            
+                          Lecture(str(row['Section Num']), row['Day'], row['From Time'], row['To Time'],
+                                  row['Hall Name']),
+                          row['Instructor Name'])
+
             course.add_section(sec)
         else:
             sec = bundle.find_course(row['Course Code']).getsec(str(row['Section Num']))
-            sec.add_lecture(Lecture(str(row['Section Num']), row['Day'], row['From Time'], row['To Time'], row['Hall Name']))
-    
+            sec.add_lecture(
+                Lecture(str(row['Section Num']), row['Day'], row['From Time'], row['To Time'], row['Hall Name']))
+
     return bundle
-
-

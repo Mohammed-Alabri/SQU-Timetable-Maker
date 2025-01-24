@@ -21,11 +21,10 @@ class Bundle:
         return lst
 
     def get_sections(self, crscode, sections=None):
+        course: Course
         course = self.find_course(crscode)
-        if course != -1:
+        if course:
             if sections is None:
                 return course.sections
-            else:
-                return course.get_sections(sections)
-        else:
-            return -1
+            return course.get_sections(sections)
+        raise RuntimeError("Course not found")

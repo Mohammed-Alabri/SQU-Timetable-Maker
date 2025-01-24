@@ -86,7 +86,7 @@ def home_page(page: ft.Page):
         for course in courses_cont.content.controls:
             x: ft.TextField
             x = course.content.controls[0]
-            if courses.find_course(x.value.upper()) == -1 or course.content.controls[1].value == '':
+            if courses.find_course(x.value.upper()) is None or course.content.controls[1].value == '':
                 message += '-' + x.label.split()[0] + '\n'
                 flag = False
         if flag:  # valid inputs

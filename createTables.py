@@ -29,12 +29,12 @@ def get_correct_tables(combs):
         section: Section
         for section in table:
             lecture: Lecture
-            seclecs = {}
+            seclecs = set()
             for lecture in section.lectures:
                 # sometimes there is duplicate in lectures
-                if lecture.day + lecture.time not in seclecs:
+                if lecture.day + lecture.start_time + lecture.end_time not in seclecs:
                     taken[lecture.day] += [lecture.tts]
-                    seclecs[lecture.day + lecture.time] = 0
+                    seclecs.add(lecture.day + lecture.start_time + lecture.end_time)
 
         if noconfilect(taken):
             correct.append(table)
@@ -45,6 +45,7 @@ def print_table(table):
     aa = []
     dic = {}
     for section in table:
+        lecture: Lecture
         for lecture in section.lectures:
             if lecture.time not in dic:
                 t = [''] * 6
