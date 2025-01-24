@@ -19,7 +19,7 @@ def data():
         "Economics",
         "CPS",
     ]
-    lst = []
+    dfs_lst = []
     for college in collegs:
         url = f"https://github.com/Mohammed-Alabri/SQU-Timetable-Maker/raw/refs/heads/main/data/{college}.xls"
         file = rq.get(url).content
@@ -28,8 +28,8 @@ def data():
         df = df.fillna("")
         df["Section Num"] = df["Section Num"].astype(int)
         df = df.astype(str)
-        lst.append(df)
-    final_df = pd.concat(lst)
+        dfs_lst.append(df)
+    final_df = pd.concat(dfs_lst)
 
     return final_df
 
