@@ -1,4 +1,10 @@
 [project]
 name = "SQU Timetable Maker"
-version = "1.1.0"
+version = "1.0.1"
 description = "SQU Timetable Maker"
+authors = [
+  {name = "Mohammed Al-Abri", email = "msa.2003.999@gmail.com"}
+]
+
+[tool.flet.compile]
+cleanup = true

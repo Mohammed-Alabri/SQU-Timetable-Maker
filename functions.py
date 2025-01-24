@@ -3,8 +3,8 @@ from Course import Course
 from Section import Section
 from Bundle import Bundle
 from Lecture import Lecture
-import pandas as pd
-
+from pandas import ExcelFile, concat
+import jsonpickle
 
 def data():
     collegs = [
@@ -23,17 +23,18 @@ def data():
     for college in collegs:
         url = f"https://github.com/Mohammed-Alabri/SQU-Timetable-Maker/raw/refs/heads/main/data/{college}.xls"
         file = rq.get(url).content
-        df = pd.ExcelFile(file).parse("Sheet1")
+        df = ExcelFile(file).parse("Sheet1")
         df = df.dropna(subset=["From Time", "Day", "To Time"])
         df = df.fillna("")
         df["Section Num"] = df["Section Num"].astype(int)
         df = df.astype(str)
         dfs_lst.append(df)
-    final_df = pd.concat(dfs_lst)
+    final_df = concat(dfs_lst)
 
     return final_df
 
 
+    
 
 
 

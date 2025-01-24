@@ -4,3 +4,4 @@ __pycache__/
 build/
 main.spec
 functions.spec
+tt.py
