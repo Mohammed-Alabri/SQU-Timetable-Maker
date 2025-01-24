@@ -4,4 +4,3 @@ __pycache__/
 build/
 main.spec
 functions.spec
-__pycache__
