@@ -6,7 +6,6 @@ days_layout = ['Days/ Times', 'SUN', 'MON', 'TUE', 'WED', 'THU']
 
 
 def all_combinations(lst):
-    print(lst)
     combinations = itertools.product(*lst)
     return combinations
 
