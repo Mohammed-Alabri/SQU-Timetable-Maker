@@ -3,10 +3,10 @@ from Course import Course
 from Section import Section
 from Bundle import Bundle
 from Lecture import Lecture
-from pandas import ExcelFile, concat
+#from pandas import ExcelFile, concat
 import jsonpickle
 
-def data():
+"""def data():
     collegs = [
         "Science",
         "Arts",
@@ -31,14 +31,17 @@ def data():
         dfs_lst.append(df)
     final_df = concat(dfs_lst)
 
-    return final_df
+    return final_df"""
 
-
+def courses_data():
+    url = "https://github.com/Mohammed-Alabri/SQU-Timetable-Maker/raw/refs/heads/main/data/data.json"
+    file = rq.get(url).content
+    return jsonpickle.decode(file)    
     
 
 
 
-def courses_data():
+"""def set_data():
     bundle = Bundle()
     df = data()
     for index, row in df.iterrows():
@@ -87,4 +90,4 @@ def courses_data():
                 )
             )
 
-    return bundle
+    return bundle"""
